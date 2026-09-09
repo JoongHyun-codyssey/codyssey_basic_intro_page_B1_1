@@ -223,3 +223,65 @@ if (
     typingWrap.classList.add("is-typing");
     typingTxt();
 }
+
+const contactForm = document.querySelector("#contact-form");
+const contactFields = [...contactForm.querySelectorAll("input, textarea")];
+const contactStatus = document.querySelector("#contact-status");
+const touchedFields = new Set();
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// 오류 문구를 반환하고, 올바른 값이면 빈 문자열을 반환합니다.
+const getContactError = (field) => {
+    const value = field.value.trim();
+    if (!value) {
+        const emptyMessages = {
+            email: "이메일을 입력해 주세요.",
+            name: "이름을 입력해 주세요.",
+            message: "메시지를 입력해 주세요.",
+        };
+        return emptyMessages[field.name];
+    }
+    if (field.name === "email" && !emailRegex.test(value)) {
+        return "이메일 형식이 알맞지 않습니다. 예: you@example.com";
+    }
+    return "";
+};
+
+const validateContactField = (field) => {
+    const message = getContactError(field);
+    const errorText = document.querySelector(`#${field.id}-error`);
+    errorText.textContent = message;
+    errorText.hidden = !message;
+    field.setAttribute("aria-invalid", String(Boolean(message)));
+    return !message;
+};
+
+contactFields.forEach((field) => {
+    field.addEventListener("blur", () => {
+        touchedFields.add(field);
+        validateContactField(field);
+    });
+    field.addEventListener("input", () => {
+        contactStatus.hidden = true;
+        // 한 번 검사한 입력란은 수정하는 동안 오류를 바로 갱신합니다.
+        if (touchedFields.has(field)) validateContactField(field);
+    });
+});
+
+contactForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    contactStatus.hidden = true;
+    let firstInvalidField;
+    contactFields.forEach((field) => {
+        touchedFields.add(field);
+        if (!validateContactField(field) && !firstInvalidField) {
+            firstInvalidField = field;
+        }
+    });
+    if (firstInvalidField) {
+        firstInvalidField.focus();
+        return;
+    }
+    contactStatus.textContent = "입력 형식을 확인했습니다. 메시지 전송 기능은 아직 연결되지 않았습니다.";
+    contactStatus.hidden = false;
+});

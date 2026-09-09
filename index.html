@@ -355,7 +355,7 @@
                         기다립니다.
                     </p>
                 </div>
-                <div class="contact-note">
+                <form class="contact-note" id="contact-form" novalidate>
                     <div class="contact-form-heading">
                         <strong>Let’s connect.</strong>
                         <span class="contact-star" aria-hidden="true">✳</span>
@@ -369,7 +369,10 @@
                                 id="email"
                                 autocomplete="email"
                                 placeholder="you@example.com"
+                                aria-describedby="email-error"
+                                required
                             />
+                            <p class="contact-error email-regex" id="email-error" aria-live="polite" hidden></p>
                         </li>
                         <li class="contact-text">
                             <label for="name">Name</label>
@@ -379,7 +382,10 @@
                                 id="name"
                                 autocomplete="name"
                                 placeholder="어떻게 불러드리면 될까요?"
+                                aria-describedby="name-error"
+                                required
                             />
+                            <p class="contact-error" id="name-error" aria-live="polite" hidden></p>
                         </li>
                         <li class="contact-text">
                             <label for="message">Message</label>
@@ -388,7 +394,10 @@
                                 id="message"
                                 rows="5"
                                 placeholder="나누고 싶은 이야기를 자유롭게 적어주세요."
+                                aria-describedby="message-error"
+                                required
                             ></textarea>
+                            <p class="contact-error" id="message-error" aria-live="polite" hidden></p>
                         </li>
                     </ul>
                     <button class="contact-submit-btn" type="submit">
@@ -397,7 +406,8 @@
                             >↗</span
                         >
                     </button>
-                </div>
+                    <p id="contact-status" role="status" hidden></p>
+                </form>
             </section>
         </main>
         <footer class="container">

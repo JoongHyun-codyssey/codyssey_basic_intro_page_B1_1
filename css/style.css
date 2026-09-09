@@ -252,8 +252,13 @@ h1 {
 }
 
 @keyframes typing-cursor {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
 }
 
 .hero-actions {
@@ -972,6 +977,31 @@ h3 {
 
 .contact-text:focus-within label {
     color: var(--accent);
+}
+
+.contact-note {
+    --error-color: #ba3434;
+}
+
+:root[data-theme="dark"] .contact-note {
+    --error-color: #ff9696;
+}
+
+.contact .contact-text .contact-error {
+    margin: 0;
+    color: var(--error-color);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.contact-text input[aria-invalid="true"],
+.contact-text textarea[aria-invalid="true"] {
+    border-color: var(--error-color);
+    outline-color: var(--error-color);
+}
+
+.contact-text:has([aria-invalid="true"]) label {
+    color: var(--error-color);
 }
 
 .contact-submit-btn {
