@@ -62,10 +62,13 @@
                         <span class="name">JoongHyun Ahn</span
                         ><span class="accent">.</span>
                     </h1>
-                    <p class="hero-description">
-                        작은 호기심을 코드로, 코드를 더 나은 경험으로.<br />매일
-                        배우고 만들며 성장하는 예비 개발자입니다.
-                    </p>
+                    <div class="hero-description-wrap">
+                        <p class="hero-description">
+                            작은 호기심을 코드로, 코드를 더 나은 경험으로.<br />매일
+                            배우고 만들며 성장하는 예비 개발자입니다.
+                        </p>
+                        <p class="typing" aria-hidden="true"></p>
+                    </div>
                     <div class="hero-actions">
                         <a class="button primary" href="#projects"
                             >프로젝트 둘러보기
@@ -353,22 +356,47 @@
                     </p>
                 </div>
                 <div class="contact-note">
-                    <span class="contact-star" aria-hidden="true">✳</span
-                    ><strong>Let’s connect.</strong>
+                    <div class="contact-form-heading">
+                        <strong>Let’s connect.</strong>
+                        <span class="contact-star" aria-hidden="true">✳</span>
+                    </div>
                     <ul class="contact-text-wrap">
-                        <li>
+                        <li class="contact-text">
                             <label for="email">Email</label>
-                            <input type="text" name="email" />
+                            <input
+                                type="email"
+                                name="email"
+                                id="email"
+                                autocomplete="email"
+                                placeholder="you@example.com"
+                            />
                         </li>
-                        <li>
+                        <li class="contact-text">
                             <label for="name">Name</label>
-                            <input type="text" name="name" />
+                            <input
+                                type="text"
+                                name="name"
+                                id="name"
+                                autocomplete="name"
+                                placeholder="어떻게 불러드리면 될까요?"
+                            />
                         </li>
-                        <li>
+                        <li class="contact-text">
                             <label for="message">Message</label>
-                            <textarea name="message" id="message"></textarea>
+                            <textarea
+                                name="message"
+                                id="message"
+                                rows="5"
+                                placeholder="나누고 싶은 이야기를 자유롭게 적어주세요."
+                            ></textarea>
                         </li>
                     </ul>
+                    <button class="contact-submit-btn" type="submit">
+                        <span>Submit</span>
+                        <span class="contact-submit-icon" aria-hidden="true"
+                            >↗</span
+                        >
+                    </button>
                 </div>
             </section>
         </main>
@@ -376,7 +404,10 @@
             <a class="logo" href="#home" aria-label="맨 위로"
                 >JoongHyun Ahn<span>.</span></a
             >
-            <p>© <span id="year">2026</span> 안중현. Built with curiosity.</p>
+            <p>
+                © <span id="year">2026</span> 안중현 |
+                <a href="https://github.com/JoongHyun-codyssey">GitHub</a>
+            </p>
             <a class="footer-top" href="#home"
                 >BACK TO TOP <span aria-hidden="true">↑</span></a
             >

@@ -183,3 +183,43 @@ async function fetch_projects() {
 projectsRetry.addEventListener("click", fetch_projects);
 // 함수 선언만으로는 실행되지 않으므로 직접 호출합니다.
 fetch_projects();
+let typingBool = false;
+let typingIdx = 0;
+let tyInt;
+const typ = document.getElementsByClassName("typing")[0];
+const typingWrap = document.querySelector(".hero-description-wrap");
+let Txt = document.getElementsByClassName("hero-description")[0].innerText;
+Txt = Txt.split("");
+
+const typingTxt = () => {
+    if (typingBool == false) {
+        typingBool = true;
+        typingIdx = 0;
+        typ.textContent = "";
+        tyInt = setInterval(typing, 100);
+    }
+};
+
+const typing = () => {
+    if (typingIdx < Txt.length) {
+        typ.append(Txt[typingIdx]);
+        typingIdx++;
+    }
+
+    if (typingIdx >= Txt.length) {
+        clearInterval(tyInt);
+        setTimeout(() => {
+            typingBool = false;
+            typingTxt();
+        }, 5000);
+    }
+};
+
+// 모션 줄이기 설정에서는 원문을 그대로 보여줍니다.
+if (
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+    Txt.length > 0
+) {
+    typingWrap.classList.add("is-typing");
+    typingTxt();
+}
