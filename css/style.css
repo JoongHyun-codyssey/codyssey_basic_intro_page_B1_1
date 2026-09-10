@@ -1,3 +1,4 @@
+/* 공통 스타일과 모바일 기본 레이아웃 */
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;650;700;750&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap");
 
 :root {
@@ -10,6 +11,13 @@
     --soft: #eeeee5;
     --header: rgba(247, 245, 240, 0.94);
     --radius: 14px;
+    --font-body: "DM Sans", "Noto Sans KR", sans-serif;
+    --font-mono: "IBM Plex Mono", monospace;
+    --space-2: 8px;
+    --space-4: 16px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --card-shadow: 0 8px 24px rgb(38 40 34 / 7%);
     color-scheme: light;
 }
 
@@ -22,6 +30,7 @@
     --accent: #ff956e;
     --soft: #33392e;
     --header: rgba(30, 33, 30, 0.94);
+    --card-shadow: 0 8px 24px rgb(0 0 0 / 24%);
     color-scheme: dark;
 }
 
@@ -31,14 +40,14 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 100px;
+    scroll-padding-top: 85px;
 }
 
 body {
     margin: 0;
     background: var(--bg);
     color: var(--ink);
-    font-family: "DM Sans", "Noto Sans KR", sans-serif;
+    font-family: var(--font-body);
     -webkit-font-smoothing: antialiased;
 }
 
@@ -52,21 +61,16 @@ button {
     cursor: pointer;
 }
 
-button,
-a,
-summary {
+button, a, summary {
     -webkit-tap-highlight-color: transparent;
 }
 
-button:focus-visible,
-a:focus-visible,
-summary:focus-visible {
+button:focus-visible, a:focus-visible, summary:focus-visible {
     outline: 3px solid var(--accent);
     outline-offset: 6px;
 }
 
-ul,
-li {
+ul, li {
     list-style-type: none;
 }
 
@@ -76,7 +80,7 @@ li {
 }
 
 .container {
-    width: min(1120px, calc(100% - 80px));
+    width: min(1120px, calc(100% - 2 * var(--space-4)));
     margin-inline: auto;
 }
 
@@ -88,7 +92,8 @@ li {
     position: sticky;
     top: 0;
     z-index: 10;
-    background: var(--header);
+    background: var(--bg);
+    transition: background-color 0.2s, box-shadow 0.2s;
     backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--line);
 }
@@ -96,12 +101,13 @@ li {
 .nav-wrap {
     display: flex;
     align-items: center;
-    height: 86px;
-    gap: 38px;
+    height: 70px;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .logo {
-    font-size: 33px;
+    font-size: clamp(22px, 6vw, 29px);
     font-weight: 750;
     letter-spacing: -2px;
 }
@@ -112,19 +118,19 @@ li {
 
 nav {
     display: flex;
-    gap: 33px;
+    gap: 16px;
     align-items: center;
     margin-left: auto;
+    flex-wrap: wrap;
 }
 
 nav a {
-    font-size: 13px;
+    font-size: 11px;
     font-weight: 600;
     transition: color 0.2s;
 }
 
-nav a:hover,
-nav a.active {
+nav a:hover, nav a.active {
     color: var(--accent);
 }
 
@@ -135,16 +141,18 @@ nav a span {
 .nav-actions {
     display: flex;
     gap: 12px;
+    margin-left: auto;
+    align-items: center;
 }
 
 .theme-toggle {
-    width: 35px;
-    height: 35px;
+    width: 32px;
+    height: 32px;
     border: 1px solid var(--line);
     border-radius: 50%;
     background: transparent;
     color: var(--ink);
-    font-size: 22px;
+    font-size: 20px;
     display: grid;
     place-items: center;
 }
@@ -156,22 +164,14 @@ nav a span {
 .hero {
     position: relative;
     display: grid;
-    grid-template-columns: 1.1fr 1fr;
-    gap: 40px;
-    padding-top: 100px;
-    padding-bottom: 100px;
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding-top: 55px;
+    padding-bottom: 81px;
 }
 
-.eyebrow,
-.section-label,
-.tiny-label,
-.art-caption,
-.art-coordinate,
-.hero-bottom,
-.diagram-top,
-.diagram-bottom,
-.footer-top {
-    font-family: "IBM Plex Mono", monospace;
+.eyebrow, .section-label, .tiny-label, .art-caption, .art-coordinate, .hero-bottom, .diagram-top, .diagram-bottom, .footer-top {
+    font-family: var(--font-mono);
     font-size: 10px;
     letter-spacing: 1.4px;
     font-weight: 500;
@@ -196,26 +196,26 @@ nav a span {
 }
 
 h1 {
-    font-size: clamp(48px, 5.5vw, 72px);
+    font-size: clamp(45px, 10vw, 64px);
     line-height: 1.16;
-    letter-spacing: -3.8px;
+    letter-spacing: -2.7px;
     margin: 0;
     font-weight: 650;
 }
 
 .name {
     font-size: 0.92em;
-    letter-spacing: -4px;
+    letter-spacing: -3px;
     font-weight: 700;
 }
 
-.hero-description,
-.typing {
+.hero-description, .typing {
     margin: 28px 0 30px;
     color: var(--muted);
-    font-size: 14px;
+    font-size: 13px;
     line-height: 1.95;
     letter-spacing: -0.3px;
+    margin-top: 24px;
 }
 
 .hero-description-wrap {
@@ -231,7 +231,6 @@ h1 {
     white-space: pre-line;
 }
 
-/* 원문이 높이를 유지하므로 다시 타이핑할 때 화면이 움직이지 않습니다. */
 .is-typing .hero-description {
     opacity: 0;
 }
@@ -264,20 +263,20 @@ h1 {
 .hero-actions {
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 24px;
+    gap: 14px;
     font-size: 12px;
     font-weight: 600;
-    padding: 16px 20px;
+    padding: 15px;
     border-radius: 6px;
-    transition:
-        transform 0.2s,
+    transition: transform 0.2s,
         background 0.2s;
 }
 
@@ -310,7 +309,7 @@ h1 {
     gap: 10px;
     font-size: 11px;
     color: var(--muted);
-    margin-top: 41px;
+    margin-top: 28px;
 }
 
 .note-line {
@@ -323,6 +322,10 @@ h1 {
     position: relative;
     padding: 31px 0 36px;
     align-self: center;
+    min-width: 0;
+    width: min(100%, 450px);
+    justify-self: center;
+    padding-top: 27px;
 }
 
 .art-caption {
@@ -350,8 +353,7 @@ h1 {
     border-bottom: 1px solid #444940;
     padding: 16px 18px;
     color: #9ca497;
-    font:
-        10px "IBM Plex Mono",
+    font: 10px "IBM Plex Mono",
         monospace;
 }
 
@@ -381,11 +383,11 @@ h1 {
 
 .code-content {
     display: flex;
-    gap: 20px;
-    padding: 25px 20px 23px;
-    font:
-        11px/1.95 "IBM Plex Mono",
+    gap: 16px;
+    padding: 21px 16px;
+    font: 11px/1.95 "IBM Plex Mono",
         monospace;
+    font-size: clamp(9px, 2.6vw, 11px);
 }
 
 .line-numbers {
@@ -423,8 +425,7 @@ code {
 .terminal {
     border-top: 1px solid #444940;
     padding: 15px 20px;
-    font:
-        10px/1.9 "IBM Plex Mono",
+    font: 10px/1.9 "IBM Plex Mono",
         monospace;
     color: #a7b69f;
 }
@@ -446,14 +447,14 @@ code {
 .build-sticker {
     position: absolute;
     bottom: 11px;
-    right: -16px;
+    right: -8px;
     display: flex;
     align-items: center;
     gap: 12px;
     background: #e7ebd3;
     color: #3b4533;
     transform: rotate(7deg);
-    padding: 15px 19px;
+    padding: 12px 15px;
     border: 5px solid var(--bg);
     border-radius: 9px;
     box-shadow: 0 8px 15px #24292110;
@@ -491,7 +492,7 @@ code {
     justify-content: space-between;
     border-bottom: 1px solid var(--line);
     padding-bottom: 22px;
-    font-size: 9px;
+    font-size: 8px;
     color: var(--muted);
 }
 
@@ -500,7 +501,7 @@ code {
 }
 
 .section {
-    padding-top: 66px;
+    padding-top: 44px;
 }
 
 .section-label {
@@ -508,8 +509,8 @@ code {
     align-items: center;
     gap: 20px;
     color: var(--muted);
-    font-size: 10px;
-    margin-bottom: 30px;
+    font-size: 9px;
+    margin-bottom: 23px;
 }
 
 .section-rule {
@@ -520,13 +521,13 @@ code {
 
 .about-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 70px;
+    grid-template-columns: 1fr;
+    gap: 21px;
     align-items: start;
 }
 
 h2 {
-    font-size: 30px;
+    font-size: 28px;
     line-height: 1.55;
     letter-spacing: -1.25px;
     font-weight: 600;
@@ -539,7 +540,7 @@ h2 {
 
 .about-copy p {
     margin: 0 0 13px;
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.95;
     color: var(--muted);
 }
@@ -566,13 +567,14 @@ h2 {
 .section-heading {
     display: flex;
     justify-content: space-between;
-    align-items: baseline;
-    gap: 20px;
+    align-items: flex-start;
+    gap: 8px;
     margin-bottom: 26px;
+    flex-direction: column;
 }
 
 .section-heading h2 {
-    font-size: 27px;
+    font-size: 23px;
 }
 
 .section-heading > p {
@@ -583,17 +585,16 @@ h2 {
 
 .skill-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 17px;
+    grid-template-columns: 1fr;
+    gap: 12px;
 }
 
 .skill-card {
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    padding: 26px;
+    padding: 21px;
     background: var(--surface);
-    transition:
-        transform 0.2s,
+    transition: transform 0.2s,
         border-color 0.2s;
 }
 
@@ -631,12 +632,14 @@ h3 {
 
 .skill-card h3 {
     margin: 23px 0 8px;
+    margin-top: 18px;
 }
 
 .skill-card p {
     font-size: 11px;
     color: var(--muted);
     margin: 0 0 25px;
+    margin-bottom: 18px;
 }
 
 .skill-tags {
@@ -646,8 +649,7 @@ h3 {
 }
 
 .skill-tags span {
-    font:
-        10px "IBM Plex Mono",
+    font: 10px "IBM Plex Mono",
         monospace;
     background: var(--soft);
     color: var(--ink);
@@ -657,7 +659,7 @@ h3 {
 
 .project-card {
     display: grid;
-    grid-template-columns: 1.15fr 1fr;
+    grid-template-columns: 1fr;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: var(--radius);
@@ -668,16 +670,15 @@ h3 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 310px;
+    min-height: 270px;
     background-color: #e9ecdf;
     background-image: radial-gradient(#a6af973b 1px, transparent 1px);
     background-size: 15px 15px;
     color: #586346;
-    padding: 24px;
+    padding: 22px;
 }
 
-.diagram-top,
-.diagram-bottom {
+.diagram-top, .diagram-bottom {
     display: flex;
     justify-content: space-between;
     font-size: 8px;
@@ -697,12 +698,12 @@ h3 {
 .data-block {
     border: 1px solid #afb99f;
     border-radius: 4px;
-    padding: 10px 6px;
+    padding: 10px 7px;
     text-align: center;
     background: #e9ecdf;
-    font:
-        8px "IBM Plex Mono",
+    font: 8px "IBM Plex Mono",
         monospace;
+    font-size: 8px;
 }
 
 .data-block span {
@@ -715,7 +716,7 @@ h3 {
 .connector {
     height: 1px;
     flex: 1;
-    max-width: 30px;
+    max-width: 38px;
     background: #93a27f;
 }
 
@@ -731,16 +732,14 @@ h3 {
 }
 
 .chip small {
-    font:
-        6px "IBM Plex Mono",
+    font: 6px "IBM Plex Mono",
         monospace;
     letter-spacing: 0.5px;
 }
 
 .chip strong {
     display: block;
-    font:
-        500 38px "IBM Plex Mono",
+    font: 500 38px "IBM Plex Mono",
         monospace;
     letter-spacing: 3px;
     margin: 7px 0 10px;
@@ -765,7 +764,7 @@ h3 {
 }
 
 .project-info {
-    padding: 33px;
+    padding: 26px;
 }
 
 .project-info .eyebrow {
@@ -835,14 +834,16 @@ h3 {
 }
 
 .contact {
-    margin-top: 76px;
+    margin-top: 50px;
     padding: 40px 0 48px;
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 30px;
+    flex-direction: column;
+    padding-top: 32px;
 }
 
 .contact .eyebrow {
@@ -850,7 +851,7 @@ h3 {
 }
 
 .contact h2 {
-    font-size: 35px;
+    font-size: 29px;
     line-height: 1.45;
 }
 
@@ -865,14 +866,15 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    flex: 0 1 420px;
+    flex: none;
     min-width: 0;
     width: 100%;
-    gap: 26px;
-    padding: 28px;
+    gap: 24px;
+    padding: 22px;
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: var(--radius);
+    --error-color: #ba3434;
 }
 
 .contact > div:first-child {
@@ -890,7 +892,7 @@ h3 {
 
 .contact-star {
     color: var(--accent);
-    font-size: 36px;
+    font-size: 40px;
     line-height: 1;
 }
 
@@ -923,15 +925,14 @@ h3 {
 
 .contact-text label {
     color: var(--muted);
-    font-family: "IBM Plex Mono", monospace;
+    font-family: var(--font-mono);
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.8px;
     transition: color 0.2s;
 }
 
-.contact-text input,
-.contact-text textarea {
+.contact-text input, .contact-text textarea {
     width: 100%;
     min-width: 0;
     padding: 13px 14px;
@@ -940,11 +941,10 @@ h3 {
     background: var(--bg);
     color: var(--ink);
     font: inherit;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.6;
     caret-color: var(--accent);
-    transition:
-        border-color 0.2s,
+    transition: border-color 0.2s,
         background-color 0.2s,
         box-shadow 0.2s;
 }
@@ -954,20 +954,17 @@ h3 {
     resize: vertical;
 }
 
-.contact-text input::placeholder,
-.contact-text textarea::placeholder {
+.contact-text input::placeholder, .contact-text textarea::placeholder {
     color: var(--muted);
     opacity: 0.8;
     font-size: 12px;
 }
 
-.contact-text input:hover,
-.contact-text textarea:hover {
+.contact-text input:hover, .contact-text textarea:hover {
     border-color: var(--muted);
 }
 
-.contact-text input:focus,
-.contact-text textarea:focus {
+.contact-text input:focus, .contact-text textarea:focus {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
     border-color: var(--accent);
@@ -977,10 +974,6 @@ h3 {
 
 .contact-text:focus-within label {
     color: var(--accent);
-}
-
-.contact-note {
-    --error-color: #ba3434;
 }
 
 :root[data-theme="dark"] .contact-note {
@@ -994,8 +987,7 @@ h3 {
     line-height: 1.6;
 }
 
-.contact-text input[aria-invalid="true"],
-.contact-text textarea[aria-invalid="true"] {
+.contact-text input[aria-invalid="true"], .contact-text textarea[aria-invalid="true"] {
     border-color: var(--error-color);
     outline-color: var(--error-color);
 }
@@ -1020,8 +1012,7 @@ h3 {
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.5px;
-    transition:
-        transform 0.2s,
+    transition: transform 0.2s,
         border-color 0.2s,
         box-shadow 0.2s;
 }
@@ -1069,8 +1060,9 @@ h3 {
 footer {
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 14px;
     padding-block: 25px;
+    flex-wrap: wrap;
 }
 
 footer .logo {
@@ -1078,13 +1070,13 @@ footer .logo {
 }
 
 footer p {
-    font-size: 10px;
+    font-size: 9px;
     color: var(--muted);
 }
 
 .footer-top {
     margin-left: auto;
-    font-size: 8px;
+    font-size: 7px;
 }
 
 .footer-top span {
@@ -1105,290 +1097,417 @@ footer p {
     top: 12px;
 }
 
-@media (min-width: 1400px) {
-    .hero {
-        padding-top: 120px;
-        padding-bottom: 120px;
+.js-enabled .menu-toggle {
+    display: block;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 7px 10px;
+    color: var(--ink);
+    font-size: 11px;
+}
+
+.js-enabled nav {
+    display: none;
+    position: absolute;
+    top: 69px;
+    left: 0;
+    right: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    padding: 22px;
+}
+
+.js-enabled nav.active {
+    display: flex;
+    justify-content: space-around;
+}
+
+.hero .eyebrow {
+    font-size: 9px;
+    letter-spacing: 1.1px;
+}
+
+@media (min-width: 768px) {
+.container {
+    width: min(1120px, calc(100% - 48px));
+}
+
+.hero {
+    gap: 25px;
+    grid-template-columns: 1.1fr 1fr;
+    padding-bottom: 90px;
+    padding-top: 75px;
+}
+
+h1 {
+    font-size: 54px;
+    letter-spacing: -3.8px;
+}
+
+.hero-art {
+    justify-self: stretch;
+    min-width: 0;
+    width: auto;
+}
+
+.code-content {
+    font-size: 10px;
+    gap: 12px;
+    padding: 20px 12px;
+}
+
+.build-sticker {
+    padding: 15px 19px;
+    right: -6px;
+}
+
+.hero-actions {
+    gap: 15px;
+}
+
+.button {
+    gap: 14px;
+    padding: 15px;
+}
+
+.section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.about-layout {
+    gap: 35px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.skill-card {
+    padding: 21px;
+}
+
+.project-info {
+    padding: 26px;
+}
+
+.project-visual {
+    min-height: 310px;
+    padding: 19px;
+}
+
+.data-block {
+    font-size: 7px;
+    padding: 8px 4px;
+}
+
+.chip {
+    width: 135px;
+}
+
+.contact h2 {
+    font-size: 30px;
+}
+
+html {
+    scroll-padding-top: 100px;
+}
+
+.nav-wrap {
+    gap: 38px;
+    height: 86px;
+    flex-wrap: nowrap;
+}
+
+.logo {
+    font-size: 29px;
+}
+
+.nav-actions {
+    align-items: center;
+    margin-left: 0;
+}
+
+.theme-toggle {
+    font-size: 22px;
+    height: 35px;
+    width: 35px;
+}
+
+nav {
+    gap: 33px;
+}
+
+nav a {
+    font-size: 13px;
+}
+
+.name {
+    letter-spacing: -4px;
+}
+
+.hero-note {
+    margin-top: 41px;
+}
+
+.hero-bottom {
+    font-size: 9px;
+}
+
+.section {
+    padding-top: 66px;
+}
+
+.section-label {
+    font-size: 10px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+.about-copy p {
+    font-size: 13px;
+}
+
+.section-heading h2 {
+    font-size: 27px;
+}
+
+.skill-grid {
+    gap: 17px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.project-card {
+    grid-template-columns: 1fr;
+}
+
+.connector {
+    max-width: none;
+}
+
+.contact {
+    align-items: center;
+    flex-direction: row;
+    gap: 30px;
+    margin-top: 76px;
+}
+
+.contact-note {
+    flex: 0 1 420px;
+    gap: 26px;
+    padding: 28px;
+}
+
+.contact-star {
+    font-size: 36px;
+}
+
+footer {
+    flex-wrap: nowrap;
+    gap: 25px;
+}
+
+footer p {
+    font-size: 10px;
+}
+
+.footer-top {
+    font-size: 8px;
+}
+
+    .js-enabled .menu-toggle { display: none; }
+    .js-enabled nav, .js-enabled nav.active {
+        display: flex; position: static; padding: 0; background: transparent;
+        border-bottom: 0; justify-content: initial;
     }
 }
 
-@media (max-width: 1000px) {
-    .container {
-        width: calc(100% - 48px);
-    }
-    .hero {
-        gap: 25px;
-        padding-top: 75px;
-        padding-bottom: 90px;
-    }
-    h1 {
-        font-size: 54px;
-    }
-    .hero-art {
-        min-width: 0;
-    }
-    .code-content {
-        gap: 12px;
-        padding: 20px 12px;
-        font-size: 10px;
-    }
-    .build-sticker {
-        right: -6px;
-    }
-    .hero-actions {
-        gap: 15px;
-    }
-    .button {
-        padding: 15px;
-        gap: 14px;
-    }
-    .section-heading {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 8px;
-    }
-    .about-layout {
-        gap: 35px;
-    }
-    .skill-card {
-        padding: 21px;
-    }
-    .project-info {
-        padding: 26px;
-    }
-    .project-visual {
-        padding: 19px;
-    }
-    .data-block {
-        font-size: 7px;
-        padding: 8px 4px;
-    }
-    .chip {
-        width: 135px;
-    }
-    .contact h2 {
-        font-size: 30px;
-    }
+@media (min-width: 1024px) {
+.container {
+    width: min(1120px, calc(100% - 80px));
 }
 
-@media (max-width: 700px) {
-    html {
-        scroll-padding-top: 85px;
-    }
-    .container {
-        width: calc(100% - 40px);
-    }
-    .nav-wrap {
-        height: 70px;
-        gap: 15px;
-    }
-    .logo {
-        font-size: 29px;
-    }
-    .nav-actions {
-        margin-left: auto;
-        align-items: center;
-    }
-    .theme-toggle {
-        width: 32px;
-        height: 32px;
-        font-size: 20px;
-    }
-    nav {
-        gap: 16px;
-    }
-    nav a {
-        font-size: 11px;
-    }
-    .menu-toggle {
-        display: none;
-    }
-    .js-enabled .menu-toggle {
-        display: block;
-        background: transparent;
-        border: 1px solid var(--line);
-        border-radius: 5px;
-        padding: 7px 10px;
-        color: var(--ink);
-        font-size: 11px;
-    }
-    .js-enabled nav {
-        display: none;
-        position: absolute;
-        top: 69px;
-        left: 0;
-        right: 0;
-        background: var(--bg);
-        border-bottom: 1px solid var(--line);
-        padding: 22px;
-    }
-    .js-enabled nav.is-open {
-        display: flex;
-        justify-content: space-around;
-    }
-    .hero {
-        grid-template-columns: 1fr;
-        padding-top: 55px;
-        gap: 36px;
-        padding-bottom: 81px;
-    }
-    .hero .eyebrow {
-        font-size: 9px;
-        letter-spacing: 1.1px;
-    }
-    h1 {
-        font-size: clamp(45px, 10vw, 64px);
-        letter-spacing: -2.7px;
-    }
-    .name {
-        letter-spacing: -3px;
-    }
-    .hero-description,
-    .typing {
-        font-size: 13px;
-        margin-top: 24px;
-    }
-    .hero-note {
-        margin-top: 28px;
-    }
-    .hero-art {
-        width: min(100%, 450px);
-        justify-self: center;
-        padding-top: 27px;
-    }
-    .code-content {
-        font-size: 11px;
-        padding: 21px 16px;
-        gap: 16px;
-    }
-    .build-sticker {
-        right: -8px;
-        padding: 12px 15px;
-    }
-    .hero-bottom {
-        font-size: 8px;
-    }
-    .section {
-        padding-top: 44px;
-    }
-    .section-label {
-        margin-bottom: 23px;
-        font-size: 9px;
-    }
-    .about-layout {
-        grid-template-columns: 1fr;
-        gap: 21px;
-    }
-    h2 {
-        font-size: 28px;
-    }
-    .about-copy p {
-        font-size: 12px;
-    }
-    .section-heading h2 {
-        font-size: 23px;
-    }
-    .skill-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-    .skill-card {
-        padding: 21px;
-    }
-    .skill-card h3 {
-        margin-top: 18px;
-    }
-    .skill-card p {
-        margin-bottom: 18px;
-    }
-    .project-card {
-        grid-template-columns: 1fr;
-    }
-    .project-visual {
-        min-height: 270px;
-        padding: 22px;
-    }
-    .chip {
-        width: 153px;
-    }
-    .data-block {
-        font-size: 8px;
-        padding: 10px 7px;
-    }
-    .connector {
-        max-width: 38px;
-    }
-    .project-info {
-        padding: 26px;
-    }
-    .contact {
-        margin-top: 50px;
-        flex-direction: column;
-        align-items: flex-start;
-        padding-top: 32px;
-        gap: 30px;
-    }
-    .contact h2 {
-        font-size: 29px;
-    }
-    .contact-note {
-        flex: none;
-        gap: 24px;
-        padding: 22px;
-    }
-    .contact-text input,
-    .contact-text textarea {
-        font-size: 16px;
-    }
-    .contact-star {
-        font-size: 40px;
-    }
-    footer {
-        gap: 14px;
-        flex-wrap: wrap;
-    }
-    footer p {
-        font-size: 9px;
-    }
-    .footer-top {
-        font-size: 7px;
-    }
+.hero {
+    gap: 40px;
+    grid-template-columns: 1.1fr 1fr;
+    padding-bottom: 100px;
+    padding-top: 100px;
 }
 
-@media (max-width: 380px) {
-    .container {
-        width: calc(100% - 30px);
-    }
-    .hero-actions {
-        gap: 15px;
-    }
-    .button {
-        font-size: 11px;
-        padding: 14px 12px;
-    }
-    .text-link {
-        font-size: 11px;
-    }
-    .code-content {
-        font-size: 9px;
-        gap: 12px;
-    }
-    .art-coordinate {
-        font-size: 7px;
-    }
-    .section-heading h2 {
-        font-size: 21px;
-    }
-    nav {
-        gap: 10px;
-    }
-    nav a {
-        font-size: 10px;
-    }
-    .footer-top {
-        width: 100%;
-        margin-left: 0;
-    }
+h1 {
+    font-size: clamp(48px, 5.5vw, 72px);
+    letter-spacing: -3.8px;
+}
+
+.hero-art {
+    justify-self: stretch;
+    width: auto;
+}
+
+.code-content {
+    gap: 20px;
+    padding: 25px 20px 23px;
+}
+
+.build-sticker {
+    padding: 15px 19px;
+    right: -16px;
+}
+
+.hero-actions {
+    gap: 25px;
+}
+
+.button {
+    gap: 24px;
+    padding: 16px 20px;
+}
+
+.section-heading {
+    align-items: baseline;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.about-layout {
+    gap: 70px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.skill-card {
+    padding: 26px;
+}
+
+.project-info {
+    padding: 33px;
+}
+
+.project-visual {
+    min-height: 310px;
+    padding: 24px;
+}
+
+.data-block {
+    padding: 10px 6px;
+}
+
+.chip {
+    width: 153px;
+}
+
+.contact h2 {
+    font-size: 35px;
+}
+
+html {
+    scroll-padding-top: 100px;
+}
+
+.nav-wrap {
+    gap: 38px;
+    height: 86px;
+}
+
+.logo {
+    font-size: 33px;
+}
+
+.nav-actions {
+    align-items: center;
+    margin-left: 0;
+}
+
+.theme-toggle {
+    font-size: 22px;
+    height: 35px;
+    width: 35px;
+}
+
+nav {
+    gap: 33px;
+}
+
+nav a {
+    font-size: 13px;
+}
+
+.name {
+    letter-spacing: -4px;
+}
+
+.hero-note {
+    margin-top: 41px;
+}
+
+.hero-bottom {
+    font-size: 9px;
+}
+
+.section {
+    padding-top: 66px;
+}
+
+.section-label {
+    font-size: 10px;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+.about-copy p {
+    font-size: 13px;
+}
+
+.section-heading h2 {
+    font-size: 27px;
+}
+
+.skill-grid {
+    gap: 17px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.project-card {
+    grid-template-columns: 1.15fr 1fr;
+}
+
+.connector {
+    max-width: none;
+}
+
+.contact {
+    align-items: center;
+    flex-direction: row;
+    gap: 30px;
+    margin-top: 76px;
+}
+
+.contact-note {
+    flex: 0 1 420px;
+    gap: 26px;
+    padding: 28px;
+}
+
+.contact-star {
+    font-size: 36px;
+}
+
+footer {
+    flex-wrap: nowrap;
+    gap: 25px;
+}
+
+footer p {
+    font-size: 10px;
+}
+
+.footer-top {
+    font-size: 8px;
+}
 }
 
 .github-heading {
@@ -1448,7 +1567,31 @@ footer p {
     display: none;
 }
 
+
+/* 스크롤 상태와 콘텐츠 등장 */
+.site-header.scrolled { background: var(--header); box-shadow: var(--card-shadow); }
+.profile-image { display: block; width: 140px; height: 140px; margin-bottom: var(--space-6); border-radius: var(--radius); }
+.scroll-top {
+    position: fixed; right: var(--space-6); bottom: var(--space-6); z-index: 20;
+    width: 48px; height: 48px; border: 1px solid var(--line); border-radius: 50%;
+    background: var(--ink); color: var(--bg); font-size: 24px;
+    box-shadow: var(--card-shadow); transition: transform 0.2s, background-color 0.2s;
+}
+.scroll-top:hover { transform: translateY(-4px); background: var(--accent); }
+[hidden] { display: none !important; }
+.skill-card, .project-card, .repo-card {
+    box-shadow: var(--card-shadow);
+    transition: opacity 0.6s, transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+.project-card:hover, .repo-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+.section-heading, .about-layout, .contact > div, .contact-note { transition: opacity 0.6s, transform 0.6s; }
+.reveal-pending { opacity: 0; transform: translateY(24px); }
+.theme-toggle, .menu-toggle { transition: background-color 0.2s, transform 0.2s; }
+.theme-toggle:hover, .menu-toggle:hover { background: var(--soft); transform: translateY(-2px); }
+#contact-status { padding: var(--space-4); border: 1px solid var(--accent); border-radius: var(--radius); }
+
 @media (prefers-reduced-motion: reduce) {
+    .reveal-pending { opacity: 1; transform: none; }
     html {
         scroll-behavior: auto;
     }
