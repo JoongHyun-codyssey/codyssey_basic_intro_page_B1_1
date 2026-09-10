@@ -90,44 +90,10 @@ https://api.github.com/users/JoongHyun-codyssey/repos?sort=updated&direction=des
 
 저장소: https://github.com/JoongHyun-codyssey/codyssey_basic_intro_page_B1_1
 
-예상 GitHub Pages URL: https://joonghyun-codyssey.github.io/codyssey_basic_intro_page_B1_1/
-
-**현재 변경사항의 실제 배포와 위 URL에서의 동작은 아직 확인하지 않았습니다.**
-
-1. 저장소 Settings → Pages → Build and deployment의 Source를 **GitHub Actions**로 설정합니다.
-2. 변경 파일을 `main`에 커밋하고 push합니다.
-3. Actions에서 `Deploy portfolio to GitHub Pages` 워크플로 성공을 확인합니다.
-4. 표시된 배포 URL에서 아래 체크리스트를 확인합니다.
-
-워크플로는 `index.html`, `css/`, `js/`, `images/`만 배포합니다. 모든 로컬 리소스 경로가 상대 경로이므로 저장소 이름이 포함된 Pages 주소에서도 사용할 수 있습니다.
-
-배포 설정 참고: [GitHub 공식 사용자 지정 Pages 워크플로 문서](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
+GitHub Pages URL: https://joonghyun-codyssey.github.io/codyssey_basic_intro_page_B1_1/
 
 ## 스크린샷 및 브라우저 검증
 
-현재 작업 환경에 연결 가능한 브라우저가 없어 **실제 스크린샷은 아직 첨부하지 않았습니다.** 아래 세 화면을 촬영해 `images/`에 저장하고 README에 이미지로 연결해야 합니다.
-
-- 데스크톱: 1440px 너비, 주요 섹션과 프로젝트
-- 모바일: 375px 너비, 열린 메뉴와 문의 폼
-- 다크 모드: 테마를 전환한 전체 화면
-
-코드 수준 검증 결과:
-
-- JavaScript 문법 검사와 `git diff --check` 통과
-- 모의 DOM에서 테마 저장·저장 실패, 메뉴/Esc, 60px·300px 경계값, 등장 Observer 검증 통과
-- 모의 API에서 로딩·성공·빈 목록·오류·재시도, 외부 문자열 이스케이프 검증 통과
-- 모의 DOM에서 빈 입력·이메일 오류·성공 안내·수정 후 재검증 통과
-- HTML의 id 중복, label/앵커 연결, 로컬 파일 경로, alt/defer 확인 통과
-
-이 검증은 실제 브라우저 레이아웃이나 실제 GitHub 통신 검증을 대신하지 않습니다.
-
-배포 후 확인할 항목:
-
-- [ ] 320px, 375px, 768px, 1024px, 1440px에서 가로 넘침 없는 레이아웃
-- [ ] 모바일 메뉴 열기/닫기 및 섹션 이동
-- [ ] 60px 헤더 변화, 300px 스크롤 탑 버튼 및 맨 위 이동
-- [ ] 다크 모드와 새로고침 후 유지
-- [ ] 등장 애니메이션 및 모션 줄이기 설정
-- [ ] 실제 GitHub API 호출, 실패 시 재시도
-- [ ] 빈 값·잘못된 이메일 오류와 유효한 입력의 성공 안내
-- [ ] 스크린샷 3종 첨부 및 실제 배포 URL 확인
+| 데스크톱 (1440px) | 모바일 (375px) | 다크 모드 |
+| :---: | :---: | :---: |
+| ![데스크톱 화면](images/desktop_1440.png) | ![모바일 화면](images/mobile_375.png) | ![다크 모드 화면](images/dark_mode.png) |
