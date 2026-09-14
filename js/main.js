@@ -83,14 +83,16 @@ document.querySelector("#year").textContent = new Date().getFullYear();
 
 const renderScroll = () => {
     header.classList.toggle("scrolled", window.scrollY >= 60);
-    scrollTopButton.hidden = window.scrollY < 300;
+    if (scrollTopButton) {
+        scrollTopButton.hidden = window.scrollY < 300;
+    }
 };
 
 window.addEventListener("scroll", renderScroll, { passive: true });
 
 renderScroll();
 
-scrollTopButton.addEventListener("click", () => {
+scrollTopButton?.addEventListener("click", () => {
     window.scrollTo({
         top: 0,
         behavior: reducedMotion.matches ? "instant" : "smooth",
