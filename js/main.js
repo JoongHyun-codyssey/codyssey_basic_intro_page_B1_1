@@ -19,69 +19,104 @@ const renderTheme = () => {
     root.dataset.theme = state.theme;
     const dark = state.theme === "dark";
     themeButton.setAttribute("aria-pressed", String(dark));
-    themeButton.setAttribute("aria-label", dark ? "라이트 모드 켜기" : "다크 모드 켜기");
-    document.querySelector('meta[name="theme-color"]').content = dark ? "#1e211e" : "#f7f5f0";
+    themeButton.setAttribute(
+        "aria-label",
+        dark ? "라이트 모드 켜기" : "다크 모드 켜기",
+    );
+    document.querySelector('meta[name="theme-color"]').content = dark
+        ? "#1e211e"
+        : "#f7f5f0";
 };
+
 try {
-    state.theme = localStorage.getItem("portfolio-theme") === "dark" ? "dark" : "light";
-} catch { /* 저장소를 사용할 수 없어도 테마 전환은 가능합니다. */ }
+    state.theme =
+        localStorage.getItem("portfolio-theme") === "dark" ? "dark" : "light";
+} catch {
+    /* 저장소를 사용할 수 없어도 테마 전환은 가능합니다. */
+}
+
 renderTheme();
+
 themeButton.addEventListener("click", () => {
     state.theme = state.theme === "dark" ? "light" : "dark";
     renderTheme();
-    try { localStorage.setItem("portfolio-theme", state.theme); } catch { /* 저장 불가 */ }
+    try {
+        localStorage.setItem("portfolio-theme", state.theme);
+    } catch {
+        /* 저장 불가 */
+    }
 });
 
 const renderMenu = () => {
-    navigation.classList.toggle('active', state.menuOpen);
+    navigation.classList.toggle("active", state.menuOpen);
     menuButton.setAttribute("aria-expanded", String(state.menuOpen));
 };
+
 const closeMenu = () => {
     state.menuOpen = false;
     renderMenu();
 };
+
 menuButton.addEventListener("click", () => {
     state.menuOpen = !state.menuOpen;
     renderMenu();
 });
+
 navigation.addEventListener("click", (event) => {
     if (event.target.closest("a")) closeMenu();
 });
+
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && state.menuOpen) {
         closeMenu();
         menuButton.focus();
     }
 });
+
 document.addEventListener("click", (event) => {
     if (!event.target.closest(".nav-wrap")) closeMenu();
 });
+
 window.matchMedia("(min-width: 768px)").addEventListener("change", closeMenu);
+
 document.querySelector("#year").textContent = new Date().getFullYear();
 
 const renderScroll = () => {
     header.classList.toggle("scrolled", window.scrollY >= 60);
     scrollTopButton.hidden = window.scrollY < 300;
 };
+
 window.addEventListener("scroll", renderScroll, { passive: true });
+
 renderScroll();
+
 scrollTopButton.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: reducedMotion.matches ? "instant" : "smooth" });
+    window.scrollTo({
+        top: 0,
+        behavior: reducedMotion.matches ? "instant" : "smooth",
+    });
 });
 
 // 메뉴 위치 강조와 별도로, 콘텐츠가 20% 보이면 한 번 등장합니다.
 if ("IntersectionObserver" in window && !reducedMotion.matches) {
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(({ isIntersecting, target }) => {
-            if (!isIntersecting) return;
-            target.classList.remove("reveal-pending");
-            revealObserver.unobserve(target);
+    const revealObserver = new IntersectionObserver(
+        (entries) => {
+            entries.forEach(({ isIntersecting, target }) => {
+                if (!isIntersecting) return;
+                target.classList.remove("reveal-pending");
+                revealObserver.unobserve(target);
+            });
+        },
+        { threshold: 0.2 },
+    );
+    document
+        .querySelectorAll(
+            ".section-heading, .about-layout, .skill-card, .project-card, .contact > div, .contact-note",
+        )
+        .forEach((element) => {
+            element.classList.add("reveal-pending");
+            revealObserver.observe(element);
         });
-    }, { threshold: 0.2 });
-    document.querySelectorAll(".section-heading, .about-layout, .skill-card, .project-card, .contact > div, .contact-note").forEach((element) => {
-        element.classList.add("reveal-pending");
-        revealObserver.observe(element);
-    });
 }
 
 if ("IntersectionObserver" in window) {
@@ -108,13 +143,23 @@ if ("IntersectionObserver" in window) {
 const projectsList = document.querySelector("#github-projects");
 const projectsStatus = document.querySelector("#projects-status");
 const projectsRetry = document.querySelector("#projects-retry");
+
 document.querySelector("#github-profile").href =
     `https://github.com/${GITHUB_USERNAME}?tab=repositories`;
 
 // 외부 API 문자열을 HTML에 넣기 전에 이스케이프합니다.
-const escapeHTML = (value) => String(value).replace(/[&<>"']/g, (character) => ({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
-})[character]);
+const escapeHTML = (value) =>
+    String(value).replace(
+        /[&<>"']/g,
+        (character) =>
+            ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;",
+            })[character],
+    );
 
 const renderProjects = () => {
     const { status, repositories, error } = state.projects;
@@ -128,15 +173,25 @@ const renderProjects = () => {
         error: `프로젝트를 불러올 수 없습니다. ${error}`,
     };
     projectsStatus.textContent = messages[status];
-    projectsList.innerHTML = status === "success" ? repositories.map((repository) => {
-        const { name, description, language, stargazers_count = 0 } = repository;
-        const url = `https://github.com/${encodeURIComponent(GITHUB_USERNAME)}/${encodeURIComponent(name)}`;
-        return `<article class="repo-card">
-            <h4><a href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(name)} ↗</a></h4>
-            <p>${escapeHTML(description || "아직 등록된 설명이 없습니다.")}</p>
-            <div class="skill-tags"><span>${escapeHTML(language || "언어 미지정")}</span><span aria-label="스타 ${escapeHTML(stargazers_count)}개">★ ${escapeHTML(stargazers_count)}</span></div>
-        </article>`;
-    }).join("") : "";
+    projectsList.innerHTML =
+        status === "success"
+            ? repositories
+                  .map((repository) => {
+                      const {
+                          name,
+                          description,
+                          language,
+                          stargazers_count = 0,
+                      } = repository;
+                      const url = `https://github.com/${encodeURIComponent(GITHUB_USERNAME)}/${encodeURIComponent(name)}`;
+                      return `<article class="repo-card">
+                                <h4><a href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">${escapeHTML(name)} ↗</a></h4>
+                                <p>${escapeHTML(description || "아직 등록된 설명이 없습니다.")}</p>
+                                <div class="skill-tags"><span>${escapeHTML(language || "언어 미지정")}</span><span aria-label="스타 ${escapeHTML(stargazers_count)}개">★ ${escapeHTML(stargazers_count)}</span></div>
+                            </article>`;
+                  })
+                  .join("")
+            : "";
 };
 
 async function fetch_projects() {
@@ -147,23 +202,38 @@ async function fetch_projects() {
     const timeout = setTimeout(() => controller.abort(), 15000);
     try {
         const response = await fetch(GITHUB_API_URL, {
-            headers: { Accept: "application/vnd.github+json" }, signal: controller.signal,
+            headers: { Accept: "application/vnd.github+json" },
+            signal: controller.signal,
         });
         if (!response.ok) {
-            if (response.status === 404) throw new Error("GitHub 사용자를 찾을 수 없습니다.");
-            if (response.status === 403 || response.status === 429) throw new Error("요청이 제한되었습니다. 잠시 후 다시 시도해 주세요.");
+            if (response.status === 404)
+                throw new Error("GitHub 사용자를 찾을 수 없습니다.");
+            if (response.status === 403 || response.status === 429)
+                throw new Error(
+                    "요청이 제한되었습니다. 잠시 후 다시 시도해 주세요.",
+                );
             throw new Error(`HTTP ${response.status}`);
         }
         const repositories = await response.json();
-        if (!Array.isArray(repositories) || repositories.some((repo) => !repo || typeof repo.name !== "string")) {
+        if (
+            !Array.isArray(repositories) ||
+            repositories.some((repo) => !repo || typeof repo.name !== "string")
+        ) {
             throw new Error("저장소 목록의 응답 형식이 올바르지 않습니다.");
         }
-        state.projects = { status: repositories.length ? "success" : "empty", repositories, error: "" };
+        state.projects = {
+            status: repositories.length ? "success" : "empty",
+            repositories,
+            error: "",
+        };
     } catch (error) {
         state.projects.status = "error";
-        state.projects.error = error.name === "AbortError"
-            ? "응답 시간이 초과되었습니다. 다시 시도해 주세요."
-            : error instanceof TypeError ? "인터넷 연결을 확인하고 다시 시도해 주세요." : error.message;
+        state.projects.error =
+            error.name === "AbortError"
+                ? "응답 시간이 초과되었습니다. 다시 시도해 주세요."
+                : error instanceof TypeError
+                  ? "인터넷 연결을 확인하고 다시 시도해 주세요."
+                  : error.message;
     } finally {
         clearTimeout(timeout);
         renderProjects();
@@ -173,6 +243,7 @@ async function fetch_projects() {
 projectsRetry.addEventListener("click", fetch_projects);
 // 함수 선언만으로는 실행되지 않으므로 직접 호출합니다.
 fetch_projects();
+
 let typingBool = false;
 let typingIdx = 0;
 let tyInt;
@@ -246,7 +317,8 @@ const renderForm = () => {
         field.setAttribute("aria-invalid", String(Boolean(message)));
     });
     contactStatus.textContent = state.form.submitted
-        ? "입력 검증에 성공했습니다. 감사합니다! 이 데모 폼은 메시지를 실제로 전송하지 않습니다." : "";
+        ? "입력 검증에 성공했습니다. 감사합니다! 이 데모 폼은 메시지를 실제로 전송하지 않습니다."
+        : "";
     contactStatus.hidden = !state.form.submitted;
 };
 const validateContactField = (field) => {
